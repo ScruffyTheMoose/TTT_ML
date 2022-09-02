@@ -1,6 +1,3 @@
-from re import I
-
-
 class TicTacToe:
     def __init__(self) -> None:
         self.board = [
