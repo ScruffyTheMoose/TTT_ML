@@ -58,8 +58,6 @@ class Board:
             tuple: (<status>, <winner>)
         """
 
-        # need to add check for full board with no winner
-
         # running the three checks and storing outputs to variables
         r = self._check_rows()
         c = self._check_columns()
