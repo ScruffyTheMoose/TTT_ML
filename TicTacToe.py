@@ -1,9 +1,9 @@
 class TicTacToe:
     def __init__(self) -> None:
         self.board = [
-            [False, False, False],
-            [False, False, False],
-            [False, False, False],
+            [-1, -1, -1],
+            [-1, -1, -1],
+            [-1, -1, -1],
         ]
 
     def move(self, row: int, column: int, player: str) -> None:
@@ -15,7 +15,12 @@ class TicTacToe:
             player (str): 'X' or 'O'
         """
 
-        self.board[row][column] = player.upper()
+        if player.upper() == "X":
+            p = 1
+        else:
+            p = 0
+
+        self.board[row][column] = p
 
     def board_status(self) -> tuple:
         """Checks the board for 4 conditions:
@@ -36,6 +41,8 @@ class TicTacToe:
             if True in t:
                 return t
 
+        return (False, None)
+
     def _check_rows(self) -> tuple:
         """Checks the rows of the game board for a winning position
 
@@ -45,10 +52,13 @@ class TicTacToe:
 
         for row in self.board:
             # checking for False values in row to bypass summation
-            if False in row:
+            if -1 in row:
                 continue
 
-            return self._check_triple(row)
+            check = self._check_triple(row)
+
+            if check[0]:
+                return check
 
         # if no winning rows found, return False
         return (False, None)
@@ -65,10 +75,13 @@ class TicTacToe:
             col = [x[column] for x in self.board]
 
             # checking for False values in column to bypass summation
-            if False in col:
+            if -1 in col:
                 continue
 
-            return self._check_triple(col)
+            check = self._check_triple(col)
+
+            if check[0]:
+                return check
 
         # if no winning columns found, return False
         return (False, None)
@@ -82,7 +95,7 @@ class TicTacToe:
 
         # generating diagonals of game board into two lists
         diag_left = [self.board[i][i] for i in range(3)]
-        diag_right = [self.board[i][i] for i in range(-3)]
+        diag_right = [self.board[-i][i - 1] for i in range(1, 4)]
 
         stat = self._check_triple(diag_left)
         if stat[0]:
@@ -91,6 +104,8 @@ class TicTacToe:
         stat = self._check_triple(diag_right)
         if stat[0]:
             return stat
+
+        return (False, None)
 
     def _check_triple(self, triple: list) -> tuple:
         """Checks a list of 3 elements for a winning position
@@ -102,7 +117,7 @@ class TicTacToe:
             tuple: (<status>, <winner>)
         """
 
-        if False in triple:
+        if -1 in triple:
             return (False, None)
 
         ct = sum(triple)
@@ -110,6 +125,8 @@ class TicTacToe:
             return (True, "O")
         elif ct == 3:
             return (True, "X")
+        else:
+            return (False, None)
 
     def get_board(self) -> list(list()):
         """Getter for the game board object
@@ -136,7 +153,7 @@ class TicTacToe:
 
             for j, element in enumerate(row):
 
-                if element is False:
+                if element == -1:
                     board += "   "
                 elif element == 0:
                     board += " O "
