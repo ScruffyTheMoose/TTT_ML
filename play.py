@@ -47,9 +47,9 @@ while not game_status[0]:
         row = int(input("Enter row index: "))
         column = int(input("Enter column index: "))
 
-        if game.board[row][column] == -1:
-            game.move(row, column, player)
-        else:
+        move = game.move(row, column, player)
+
+        if not move:
             row, column = None, None
             print("That space is taken, please select another! \n")
 
