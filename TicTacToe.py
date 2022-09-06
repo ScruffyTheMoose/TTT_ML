@@ -6,7 +6,7 @@ class Board:
             [-1, -1, -1],
         ]
 
-    def move(self, row: int, column: int, player: str) -> None:
+    def move(self, row: int, column: int, player: str) -> bool:
         """Places a new piece on the board
 
         Args:
@@ -21,7 +21,11 @@ class Board:
         else:
             p = 0
 
-        self.board[row][column] = p
+        if self.board[row][column] == -1:
+            self.board[row][column] = p
+            return True
+
+        return False
 
     def avail_moves(self) -> list(tuple()):
         """Returns a list of ordered pairs references available spaces on the board
