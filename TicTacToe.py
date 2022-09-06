@@ -34,7 +34,7 @@ class Board:
             self (_type_): class method
 
         Returns:
-            matrix: 2D list
+            matrix: list(tuple())
         """
 
         result = list()
@@ -185,7 +185,7 @@ class Board:
             self (_type_): class method
 
         Returns:
-            matrix: 2D list
+            matrix: list(list())
         """
 
         return self.board
