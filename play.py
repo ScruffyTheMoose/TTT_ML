@@ -15,16 +15,16 @@ p2_ct = 0
 # setup loop
 while p1 is None:
     tmp = input("\nPlease enter which player goes first: ")
-    tmp = tmp.upper()
+    tmp = int(tmp)
 
-    if tmp == "X":
+    if tmp == 1:
         p1 = tmp
-        p2 = "O"
-    elif tmp == "O":
+        p2 = 0
+    elif tmp == 0:
         p1 = tmp
-        p2 = "X"
+        p2 = 1
     else:
-        print("\nEnter a valid symbol - 'X' or 'O'")
+        print("\nEnter a valid symbol - 1 for 'X' or 0 for 'O'")
 
     print("\n")
 
