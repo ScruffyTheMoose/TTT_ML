@@ -1,4 +1,4 @@
-from TicTacToe import Board
+from TicTacToe import Board, GameTools as gt
 
 # initializing the game and setting status
 game = Board()
@@ -39,7 +39,7 @@ while not game_status[0]:
         p2_ct += 1
         print(f"'{p2}' - please select your next move!", "\n")
 
-    print(game.string_board(), "\n")
+    print(game.print(), "\n")
 
     row, column = None, None
 
@@ -53,15 +53,10 @@ while not game_status[0]:
             row, column = None, None
             print("That space is taken, please select another! \n")
 
-    game_status = game.board_status()
+    game_status = gt.board_status(game.board)
 
 # completion and results
 if game_status[1] != None:
-    print(
-        "\n"
-        + game.string_board()
-        + "\n\n"
-        + f"Congratulation '{game_status[1]}', you won!"
-    )
+    print("\n" + game.print() + "\n\n" + f"Congratulation '{game_status[1]}', you won!")
 else:
-    print("\n" + game.string_board() + "\n\n" + "Draw!")
+    print("\n" + game.print() + "\n\n" + "Draw!")
