@@ -272,6 +272,11 @@ class GameTools:
             }
         """
 
+        if first_player == 1:
+            n = 1
+        else:
+            n = -1
+
         game = Board()
 
         # generating list of all positions on the board to randomly choose from
@@ -300,15 +305,16 @@ class GameTools:
 
             # decrementing positions open
             idx = 9 - pos
-            pos -= 1
 
             int_pos = ((move[0] + 1) * 2) + move[1] + 1
 
             # recording move
             if pos % 2 != 0:
-                hist[idx] = int_pos
+                hist[idx] = n * int_pos
             else:
-                hist[idx] = -int_pos
+                hist[idx] = n * -int_pos
+
+            pos -= 1
 
             # checking game status after new move made - if game over, break loop and return
             status = game.status()
