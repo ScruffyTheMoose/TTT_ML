@@ -62,7 +62,7 @@ class Board:
                     return check
 
             # if no winning rows found, return False
-            return (False, None)
+            return (False, -1)
 
         def check_columns() -> tuple:
             """Checks the columns of the game board for a winning position
@@ -86,7 +86,7 @@ class Board:
                     return check
 
             # if no winning columns found, return False
-            return (False, None)
+            return (False, -1)
 
         def check_diag() -> tuple:
             """Checks the diagonals of the game board for a winning position
@@ -109,7 +109,7 @@ class Board:
             if stat[0]:
                 return stat
 
-            return (False, None)
+            return (False, -1)
 
         def check_triple(triple: list) -> tuple:
             """Checks a list of 3 elements for a winning position
@@ -123,7 +123,7 @@ class Board:
 
             # if there is an open space in the given list, then there is no winner
             if -1 in triple:
-                return (False, None)
+                return (False, -1)
 
             # the sum of the elements in the row will indicate status
             ct = sum(triple)
@@ -132,7 +132,7 @@ class Board:
             elif ct == 3:
                 return (True, 1)
             else:
-                return (False, None)
+                return (False, -1)
 
         def check_draw() -> tuple:
             """Checks the game board for a draw
@@ -143,7 +143,7 @@ class Board:
 
             for row in self.board:
                 if -1 in row:
-                    return (False, None)
+                    return (False, -1)
 
             return (True, -1)
 
@@ -220,134 +220,6 @@ class GameTools:
                     result.append(ord_pair)
 
         return result
-
-    @staticmethod
-    def board_status(board: list) -> tuple:
-        """Checks the board for 4 conditions:
-        - Game ongoing
-        - Game draw
-        - Player 'X' wins
-        - Player 'O' wins
-
-        Returns:
-            tuple: (<status>, <winner>)
-        """
-
-        def check_rows() -> tuple:
-            """Checks the rows of the game board for a winning position
-
-            Returns:
-                tuple: (<status>, <winner>)
-            """
-
-            for row in board:
-                # checking for False values in row to bypass summation
-                if -1 in row:
-                    continue
-
-                # checking the row for status
-                check = check_triple(row)
-
-                if check[0]:
-                    return check
-
-            # if no winning rows found, return False
-            return (False, None)
-
-        def check_columns() -> tuple:
-            """Checks the columns of the game board for a winning position
-
-            Returns:
-                tuple: (<status>, <winner>)
-            """
-
-            for column in range(3):
-                # building column into list
-                col = [x[column] for x in board]
-
-                # checking for False values in column to bypass summation
-                if -1 in col:
-                    continue
-
-                # checking column for status
-                check = check_triple(col)
-
-                if check[0]:
-                    return check
-
-            # if no winning columns found, return False
-            return (False, None)
-
-        def check_diag() -> tuple:
-            """Checks the diagonals of the game board for a winning position
-
-            Returns:
-                tuple: (<status>, <winner>)
-            """
-
-            # generating diagonals of game board into two lists
-            diag_left = [board[i][i] for i in range(3)]
-            diag_right = [board[-i][i - 1] for i in range(1, 4)]
-
-            # checking left status
-            stat = check_triple(diag_left)
-            if stat[0]:
-                return stat
-
-            # checking right status
-            stat = check_triple(diag_right)
-            if stat[0]:
-                return stat
-
-            return (False, None)
-
-        def check_triple(triple: list) -> tuple:
-            """Checks a list of 3 elements for a winning position
-
-            Args:
-                triple (list): list of 3 adjacent elements from the game board
-
-            Returns:
-                tuple: (<status>, <winner>)
-            """
-
-            # if there is an open space in the given list, then there is no winner
-            if -1 in triple:
-                return (False, None)
-
-            # the sum of the elements in the row will indicate status
-            ct = sum(triple)
-            if ct == 0:
-                return (True, "O")
-            elif ct == 3:
-                return (True, "X")
-            else:
-                return (False, None)
-
-        def check_draw() -> tuple:
-            """Checks the game board for a draw
-
-            Returns:
-                tuple: (<status>, <winner>)
-            """
-
-            for row in board:
-                if -1 in row:
-                    return (False, None)
-
-            return (True, -1)
-
-        # running the three checks and storing outputs to variables
-        r = check_rows()
-        c = check_columns()
-        d = check_diag()
-
-        # checking the outputs for a winning case
-        for t in [r, c, d]:
-            if True in t:
-                return t
-
-        return check_draw()
 
     @staticmethod
     def string_board() -> str:
