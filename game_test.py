@@ -37,11 +37,11 @@ def test_1():
     # setting up board
     for idx, move in enumerate(moves):
         if idx % 2 == 0:
-            game.move(move[0], move[1], "X")
+            game.move(move[0], move[1], 1)
         else:
-            game.move(move[0], move[1], "O")
+            game.move(move[0], move[1], 0)
 
-    return game.board_status()
+    return game.status()
 
 
 # checks for column completion
@@ -53,11 +53,11 @@ def test_2():
     # setting up board
     for idx, move in enumerate(moves):
         if idx % 2 == 0:
-            game.move(move[0], move[1], "X")
+            game.move(move[0], move[1], 1)
         else:
-            game.move(move[0], move[1], "O")
+            game.move(move[0], move[1], 0)
 
-    return game.board_status()
+    return game.status()
 
 
 # checks for diagonal completion
@@ -69,11 +69,11 @@ def test_3():
     # setting up board
     for idx, move in enumerate(moves):
         if idx % 2 == 0:
-            game.move(move[0], move[1], "X")
+            game.move(move[0], move[1], 1)
         else:
-            game.move(move[0], move[1], "O")
+            game.move(move[0], move[1], 0)
 
-    return game.board_status()
+    return game.status()
 
 
 # checks for draw game
@@ -85,11 +85,11 @@ def test_4():
     # setting up board
     for idx, move in enumerate(moves):
         if idx % 2 == 0:
-            game.move(move[0], move[1], "X")
+            game.move(move[0], move[1], 1)
         else:
-            game.move(move[0], move[1], "O")
+            game.move(move[0], move[1], 0)
 
-    return game.board_status()
+    return game.status()
 
 
 # checks for ongoing game
@@ -101,11 +101,11 @@ def test_5():
     # setting up board
     for idx, move in enumerate(moves):
         if idx % 2 == 0:
-            game.move(move[0], move[1], "X")
+            game.move(move[0], move[1], 1)
         else:
-            game.move(move[0], move[1], "O")
+            game.move(move[0], move[1], 0)
 
-    return game.board_status()
+    return game.status()
 
 
 if __name__ == "__main__":
