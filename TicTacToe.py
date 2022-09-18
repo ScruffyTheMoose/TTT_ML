@@ -145,7 +145,7 @@ class Board:
                 if -1 in row:
                     return (False, None)
 
-            return (True, None)
+            return (True, -1)
 
         # running the three checks and storing outputs to variables
         r = check_rows()
@@ -335,7 +335,7 @@ class GameTools:
                 if -1 in row:
                     return (False, None)
 
-            return (True, None)
+            return (True, -1)
 
         # running the three checks and storing outputs to variables
         r = check_rows()
@@ -410,7 +410,7 @@ class GameTools:
                 coords.append((r, c))
 
         # for tracking moves made during match
-        hist = dict()
+        hist = [0 for _ in range(9)]
 
         # placing moves on the board until desired number of positions filled
         pos = 9
@@ -426,17 +426,17 @@ class GameTools:
             else:
                 game.move(row=move[0], column=move[1], player=(1 - first_player))
 
-            # need to check the game status each iteration
-            # if we return build a completed match, we want to know
-
-            # current move number
-            move_num = 9 - pos
-
             # decrementing positions open
+            idx = 9 - pos
             pos -= 1
 
+            int_pos = ((move[0] + 1) * 2) + move[1] + 1
+
             # recording move
-            hist[move_num] = move
+            if pos % 2 != 0:
+                hist[idx] = int_pos
+            else:
+                hist[idx] = -int_pos
 
             # checking game status after new move made - if game over, break loop and return
             status = game.status()
@@ -450,5 +450,8 @@ class GameTools:
             "move_history": hist,  # ordered list of who moved and where
             "winner": status[1],  # None, X, or O
         }
+
+        for i in range(9):
+            results[i + 1] = hist[i]
 
         return results
