@@ -15,6 +15,8 @@ The sample data generator notebook is located here along with the data sets it h
 ## Tests folder
 You can ignore this. We need to test basic functions every time we change up things about the main TTT module, and we use these tests to do it quickly.
 
+## Modules
+
 ### TicTacToe.py
 This python file contains two classes:
 - Board: class which contains a functioning TTT game
