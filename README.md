@@ -18,7 +18,7 @@ You can ignore this. We need to test basic functions every time we change up thi
 #### TicTacToe.py
 This python file contains two classes:
 - Board: class which contains a functioning tic tac toe game
-- GameTools: contains the random math generator and a few other tools for working with tic tac toe boards
+- GameTools: contains the random match generator and a few other tools for working with tic tac toe boards
 
 #### play.py
 If you want to play the game against another human player through your command line, you can run this file. We aim to use this module later on so a person can play against an AI.
