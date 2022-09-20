@@ -256,7 +256,7 @@ class GameTools:
         return board
 
     @staticmethod
-    def randomized_match(first_player: int, open_pos: int) -> list:
+    def randomized_match(first_player: int, open_pos: int) -> dict:
         """Generates random TTT game board
 
         Args:
@@ -266,8 +266,6 @@ class GameTools:
         Returns:
             dict: {
             "board": game board matrix,
-            "first_player": player who made first move,
-            "move_history": dictionary of moves made during match,
             "winner": winner of match,
             }
         """
