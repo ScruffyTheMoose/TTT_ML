@@ -6,13 +6,19 @@
 
 `TTT ML` is a research repository looking at different approaches to training machine learning algorithms to play Tic-Tac-Toe (TTT).
 
-## Models folder
-This folder contains Jupyter Notebooks were we are building and evaluating different machine learning models.
+## model_binaries
+Binaries of compiled models that can be loaded elsewhere.
 
-## Data folder
+## model_builds
+Jupyter Notebooks were we are building different models.
+
+## model_evaluations
+Jupyter Notebooks comparing and evaluating the performance of different models.
+
+## data
 The sample data generator notebook is located here along with the data sets it has been used to build. These datasets are structured so that they are easy to use with Pandas.
 
-## Tests folder
+## tests
 You can ignore this. We need to test basic functions every time we change up things about the main TTT module, and we use these tests to do it quickly.
 
 ## Modules
