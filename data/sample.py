@@ -4,7 +4,7 @@ import random
 
 
 def random_samples(
-    n_samples: int = 500,
+    n_samples: int = 200,
     save_file: bool = False,
     directory: str = None,
     rand_first_player: bool = True,
@@ -29,7 +29,7 @@ def random_samples(
     osr = open_space_range
 
     # list to store the samples that we generate
-    samples = list()
+    data = list()
 
     # Condition 1
     if rand_first_player:
@@ -40,7 +40,7 @@ def random_samples(
             open_spaces = random.randint(osr[0], osr[1])
             # generating and storing the sample
             match = gt.randomized_match(first_player=player, open_pos=open_spaces)
-            samples.append(match)
+            data.append(match)
 
     # Condition 2
     else:
@@ -51,14 +51,14 @@ def random_samples(
             open_spaces = random.randint(osr[0], osr[1])
             # generating and storing the sample
             match = gt.randomized_match(first_player=player, open_pos=open_spaces)
-            samples.append(match)
+            data.append(match)
 
     # will randomly order the samples before saving
     if shuffled:
-        samples = random.shuffle(samples)
+        random.shuffle(data)
 
     # converting the list into a DataFrame
-    df = pd.DataFrame(samples)
+    df = pd.DataFrame(data)
 
     # saves the file to specified directory
     if save_file:
