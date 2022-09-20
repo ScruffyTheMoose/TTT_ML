@@ -22,6 +22,16 @@ This python file contains two classes:
 - Board: class which contains a functioning TTT game
 - GameTools: contains the random match generator and a few other tools for working with TTT boards
 
+### Sample.py
+A module that generates samples for a training set based on a number of parameters and can save the dataset to a file.
+- n_samples: int
+- save_file: bool
+- directory: save directory
+- rand_first_player: bool
+- first_player: int, if not rand_first_player
+- open_space_range: the lower and upper bound for choosing open spaces on a board
+- shuffled: bool
+
 ### play.py
 If you want to play the game against another human player through your command line, you can run this file. We aim to use this module later on so a person can play against an AI.
 

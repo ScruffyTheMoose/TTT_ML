@@ -15,6 +15,7 @@ def random_samples(
     """Creates a set of random samples and saves them to the specified directory as a .csv file.
 
     n_samples: the number of samples to generate
+    save_file: bool
     directory: the directory and filename
     rand_first_player: will randomly select first player for each sample
     first_player: if not rand_first_player, this will be the first player for each sample
