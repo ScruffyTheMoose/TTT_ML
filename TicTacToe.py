@@ -324,8 +324,6 @@ class GameTools:
         # dict to return containing all relevant information from the randomized match
         results = {
             "board": game.board,
-            "first_player": first_player,
-            "move_history": hist,  # ordered list of who moved and where
             "winner": status[1],  # None, X, or O
         }
 
