@@ -5,7 +5,8 @@ import random
 
 def random_samples(
     n_samples: int = 500,
-    directory: str = "samples.csv",
+    save_file: bool = False,
+    directory: str = None,
     rand_first_player: bool = True,
     first_player: int = 1,
     open_space_range: tuple = (1, 8),
@@ -56,9 +57,15 @@ def random_samples(
     if shuffled:
         samples = random.shuffle(samples)
 
-    # converting the list into a DataFrame and then a .csv file
+    # converting the list into a DataFrame
     df = pd.DataFrame(samples)
-    df.to_csv(path_or_buf=directory, index=False)
+
+    # saves the file to specified directory
+    if save_file:
+        if directory is None:
+            raise Exception("Must provide a directory to save the sample")
+        else:
+            df.to_csv(path_or_buf=directory, index=False)
 
     # returning the DataFrame
     return df
