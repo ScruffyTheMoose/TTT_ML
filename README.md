@@ -12,7 +12,7 @@
 Binaries of compiled models that can be loaded elsewhere.
 
 ## model_builds
-Jupyter Notebooks were we are building different models.
+Jupyter Notebooks where we are building different models.
 
 ## model_evaluations
 Jupyter Notebooks comparing and evaluating the performance of different models.
