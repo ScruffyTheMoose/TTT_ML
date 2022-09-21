@@ -5,6 +5,7 @@ import random
 
 def random_samples(
     n_samples: int = 200,
+    rand_seed: int = 1,
     save_file: bool = False,
     directory: str = None,
     rand_first_player: bool = True,
@@ -25,6 +26,8 @@ def random_samples(
     Returns:
         File: a CSV file containing the sample data
     """
+
+    random.seed(rand_seed)
 
     # shorter variable name to be called later
     osr = open_space_range
