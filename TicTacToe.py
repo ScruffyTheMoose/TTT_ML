@@ -222,7 +222,7 @@ class GameTools:
         return result
 
     @staticmethod
-    def string_board() -> str:
+    def string_board(matrix) -> str:
         """Generates a string version of the game board for printing to console
 
         Returns:
@@ -233,7 +233,7 @@ class GameTools:
         board = ""
 
         # iterating through the rows
-        for i, row in enumerate(board):
+        for i, row in enumerate(matrix):
             # iterating through the elements in each row
             for j, element in enumerate(row):
 
