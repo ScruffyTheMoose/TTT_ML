@@ -6,6 +6,8 @@
 
 `TTT ML` is a research repository looking at different approaches to training machine learning algorithms to play Tic-Tac-Toe (TTT).
 
+[Project Overview](https://github.com/ScruffyTheMoose/TTT_ML/blob/master/walkthrough.ipynb)
+
 ## model_binaries
 Binaries of compiled models that can be loaded elsewhere.
 
