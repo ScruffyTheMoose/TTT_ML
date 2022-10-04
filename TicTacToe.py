@@ -19,6 +19,18 @@ class Board:
 
         return self.board
 
+    def get_vec_board(self) -> list:
+        """Getter for the game board in vectorized form
+
+        Args:
+            self (_type_): class method
+
+        Returns:
+            matrix: TTT game board vector
+        """
+
+        return self.vector
+
     def move(self, row: int, column: int, player: int) -> bool:
         """Places a new piece on the board
 
@@ -30,6 +42,9 @@ class Board:
 
         if self.board[row][column] == -1:
             self.board[row][column] = player
+
+            int_move = (3 * row) + (column + 1)
+            self.vector[self.move_num] = int_move
 
             return True
 
