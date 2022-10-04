@@ -4,6 +4,8 @@ import random
 class Board:
     def __init__(self) -> None:
         self.board = [[-1, -1, -1] for _ in range(3)]
+        self.vector = [0 for x in range(9)]
+        self.move_num = 0
 
     def get_board(self) -> list:
         """Getter for the game board object
@@ -17,6 +19,18 @@ class Board:
 
         return self.board
 
+    def get_vec_board(self) -> list:
+        """Getter for the game board in vectorized form
+
+        Args:
+            self (_type_): class method
+
+        Returns:
+            matrix: TTT game board vector
+        """
+
+        return self.vector
+
     def move(self, row: int, column: int, player: int) -> bool:
         """Places a new piece on the board
 
@@ -28,6 +42,10 @@ class Board:
 
         if self.board[row][column] == -1:
             self.board[row][column] = player
+
+            int_move = (3 * row) + (column + 1)
+            self.vector[self.move_num] = int_move
+
             return True
 
         return False
@@ -304,7 +322,7 @@ class GameTools:
             # decrementing positions open
             idx = 9 - pos
 
-            int_pos = ((move[0] + 1) * 2) + move[1] + 1
+            int_pos = (move[0] * 3) + (move[1] + 1)
 
             # recording move
             if pos % 2 != 0:
