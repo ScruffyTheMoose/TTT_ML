@@ -3,7 +3,7 @@ import random
 
 class Board:
     def __init__(self) -> None:
-        self.board = [[-1, -1, -1] for _ in range(3)]
+        self.board = [[0, 0, 0] for _ in range(3)]
         self.vector = [0 for x in range(9)]
         self.move_num = 0
 
@@ -19,32 +19,22 @@ class Board:
 
         return self.board
 
-    def get_vec_board(self) -> list:
-        """Getter for the game board in vectorized form
-
-        Args:
-            self (_type_): class method
-
-        Returns:
-            matrix: TTT game board vector
-        """
-
-        return self.vector
-
     def move(self, row: int, column: int, player: int) -> bool:
         """Places a new piece on the board
 
         Args:
             row (int): row index
             column (int): column index
-            player (str): 'X' or 'O'
+            player (int): 1 or -1
         """
 
-        if self.board[row][column] == -1:
+        if self.board[row][column] == 0:
             self.board[row][column] = player
 
-            int_move = (3 * row) + (column + 1)
-            self.vector[self.move_num] = int_move
+            vec_idx = (3 * row) + column
+            self.vector[vec_idx] = player
+
+            self.move_num += 1
 
             return True
 
@@ -70,7 +60,7 @@ class Board:
 
             for row in self.board:
                 # checking for False values in row to bypass summation
-                if -1 in row:
+                if 0 in row:
                     continue
 
                 # checking the row for status
@@ -80,7 +70,7 @@ class Board:
                     return check
 
             # if no winning rows found, return False
-            return (False, -1)
+            return (False, 0)
 
         def check_columns() -> tuple:
             """Checks the columns of the game board for a winning position
@@ -94,7 +84,7 @@ class Board:
                 col = [x[column] for x in self.board]
 
                 # checking for False values in column to bypass summation
-                if -1 in col:
+                if 0 in col:
                     continue
 
                 # checking column for status
@@ -104,7 +94,7 @@ class Board:
                     return check
 
             # if no winning columns found, return False
-            return (False, -1)
+            return (False, 0)
 
         def check_diag() -> tuple:
             """Checks the diagonals of the game board for a winning position
@@ -127,7 +117,7 @@ class Board:
             if stat[0]:
                 return stat
 
-            return (False, -1)
+            return (False, 0)
 
         def check_triple(triple: list) -> tuple:
             """Checks a list of 3 elements for a winning position
@@ -140,18 +130,19 @@ class Board:
             """
 
             # if there is an open space in the given list, then there is no winner
-            if -1 in triple:
-                return (False, -1)
+            if 0 in triple:
+                return (False, 0)
 
             # the sum of the elements in the row will indicate status
             ct = sum(triple)
-            if ct == 0:
-                return (True, 0)
+            if ct == -3:
+                return (True, -1)
             elif ct == 3:
                 return (True, 1)
             else:
-                return (False, -1)
+                return (False, 0)
 
+        # this logic could be improved
         def check_draw() -> tuple:
             """Checks the game board for a draw
 
@@ -160,10 +151,10 @@ class Board:
             """
 
             for row in self.board:
-                if -1 in row:
-                    return (False, -1)
+                if 0 in row:
+                    return (False, 0)
 
-            return (True, -1)
+            return (True, 0)
 
         # running the three checks and storing outputs to variables
         r = check_rows()
@@ -193,10 +184,10 @@ class Board:
             for j, element in enumerate(row):
 
                 # -1 is an open space
-                if element == -1:
+                if element == 0:
                     str_board += "   "
                 # 0 is an O
-                elif element == 0:
+                elif element == -1:
                     str_board += " O "
                 # if not O or empty, then X
                 else:
@@ -233,7 +224,7 @@ class GameTools:
             for j, element in enumerate(row):
 
                 # if the space is open, add the coordinate to results
-                if element == -1:
+                if element == 0:
                     ord_pair = (i, j)
                     result.append(ord_pair)
 
@@ -256,10 +247,10 @@ class GameTools:
             for j, element in enumerate(row):
 
                 # -1 is an open space
-                if element == -1:
+                if element == 0:
                     board += "   "
                 # 0 is an O
-                elif element == 0:
+                elif element == -1:
                     board += " O "
                 # if not O or empty, then X
                 else:
@@ -288,10 +279,7 @@ class GameTools:
             }
         """
 
-        if first_player == 1:
-            n = 1
-        else:
-            n = -1
+        n = -1
 
         game = Board()
 
@@ -302,13 +290,10 @@ class GameTools:
             for c in range(3):
                 coords.append((r, c))
 
-        # for tracking moves made during match
-        hist = [0 for _ in range(9)]
-
         # placing moves on the board until desired number of positions filled
         pos = 9
 
-        while pos > open_pos:
+        while pos >= open_pos:
 
             # choosing a random position to take
             move = random.choice(coords)
@@ -317,18 +302,7 @@ class GameTools:
             if pos % 2 != 0:
                 game.move(row=move[0], column=move[1], player=first_player)
             else:
-                game.move(row=move[0], column=move[1], player=(1 - first_player))
-
-            # decrementing positions open
-            idx = 9 - pos
-
-            int_pos = (move[0] * 3) + (move[1] + 1)
-
-            # recording move
-            if pos % 2 != 0:
-                hist[idx] = n * int_pos
-            else:
-                hist[idx] = n * -int_pos
+                game.move(row=move[0], column=move[1], player=(n * first_player))
 
             pos -= 1
 
@@ -340,10 +314,11 @@ class GameTools:
         # dict to return containing all relevant information from the randomized match
         results = {
             "board": game.board,
-            "winner": status[1],  # None, X, or O
+            "winner": status[1],  # 0, -1, or 1
+            "first_move": first_player,
         }
 
-        for i in range(9):
-            results[i + 1] = hist[i]
+        for idx, elem in enumerate(game.vector):
+            results[idx + 1] = elem
 
         return results

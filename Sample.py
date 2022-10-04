@@ -10,7 +10,7 @@ def random_samples(
     directory: str = None,
     rand_first_player: bool = True,
     first_player: int = 1,
-    open_space_range: tuple = (1, 8),
+    open_space_range: tuple = (0, 9),
     shuffled: bool = True,
 ) -> pd.DataFrame:
     """Creates a set of random samples and saves them to the specified directory as a .csv file.
@@ -40,7 +40,7 @@ def random_samples(
         # generate n samples
         for _ in range(n_samples):
             # determining player and open space count
-            player = random.randint(0, 1)
+            player = random.choice([-1, 1])
             open_spaces = random.randint(osr[0], osr[1])
             # generating and storing the sample
             match = gt.randomized_match(first_player=player, open_pos=open_spaces)
