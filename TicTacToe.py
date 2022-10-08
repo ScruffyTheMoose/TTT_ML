@@ -266,7 +266,7 @@ class GameTools:
 
     @staticmethod
     def randomized_match(first_player: int, open_pos: int) -> dict:
-        """Generates random TTT game board
+        """Generates random TTT game
 
         Args:
             first_player (int): player making first move; 'X' = 1, 'O' = 0
@@ -278,8 +278,6 @@ class GameTools:
             "winner": winner of match,
             }
         """
-
-        n = -1
 
         game = Board()
 
@@ -302,7 +300,7 @@ class GameTools:
             if pos % 2 != 0:
                 game.move(row=move[0], column=move[1], player=first_player)
             else:
-                game.move(row=move[0], column=move[1], player=(n * first_player))
+                game.move(row=move[0], column=move[1], player=(-1 * first_player))
 
             pos -= 1
 
@@ -322,3 +320,91 @@ class GameTools:
             results[idx + 1] = elem
 
         return results
+
+    @staticmethod
+    def randomized_reinforcement_match(first_player: int, class_type: str) -> dict:
+        """Generates random TTT game board
+
+        Args:
+            first_player (int): player making first move; 'X' = 1, 'O' = -1
+            open_spaces (int): number of open positions to leave on the board
+            class_type (str): 'XOD' or 'position'
+
+        Returns:
+            list: dictionaries of game states, outcomes, and labels
+        """
+
+        # nested function to for tracking game states
+        def track():
+
+            # dictionary and pre-move board state stored here
+            s = dict()
+            v = game.vector
+
+            # for X/O/Draw classification, we assign the board state to a label of '0' to be changed later
+            if class_type == "XOD":
+                for idx, elem in enumerate(v):
+                    s[idx + 1] = elem
+                s["label"] = 0
+
+            # for positional classification, we assign the board state to a label of the position just taken
+            else:
+                for idx, elem in enumerate(v):
+                    s[idx + 1] = elem
+                s["label"] = (move[0] * 3) + move[1] + 1
+
+            # add data to the tracked game states
+            states.append(s)
+
+        # tic tac toe instance
+        game = Board()
+
+        # tracking all board states prior to making a move
+        states = list()
+
+        # generating list of all positions on the board to randomly choose from
+        # this is better than the alternative of randomly generating numbers
+        coords = []
+        for r in range(3):
+            for c in range(3):
+                coords.append((r, c))
+
+        # placing moves on the board until desired number of positions filled
+        pos = 9
+
+        while pos >= 0:
+
+            # choosing a random position to take
+            move = random.choice(coords)
+            coords.remove(move)
+
+            if pos % 2 != 0:
+                # tracking state
+                track()
+
+                # making move
+                game.move(row=move[0], column=move[1], player=first_player)
+            else:
+                # tracking state
+                track()
+
+                # making move
+                game.move(row=move[0], column=move[1], player=(-1 * first_player))
+
+            pos -= 1
+
+            # checking game status after new move made - if game over, break loop and return
+            status = game.status()
+            if status[0]:
+                break
+
+        # for X/O/Draw, we use the final game outcome to label all the states
+        if class_type == "XOD":
+            for s in states:
+                s["label"] = status[1]
+
+        if class_type == "positional":
+            for s in states:
+                s["outcome"] = status[1]
+
+        return states
