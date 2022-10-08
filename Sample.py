@@ -73,3 +73,59 @@ def random_samples(
 
     # returning the DataFrame
     return df
+
+
+def reinforcement_sample(
+    n_samples: int = 200,
+    rand_seed: int = 1,
+    class_type: str = "XOD",
+    save_file: bool = False,
+    directory: str = None,
+    rand_first_player: bool = True,
+    first_player: int = 1,
+    shuffled: bool = True,
+) -> pd.DataFrame:
+
+    random.seed(rand_seed)
+
+    # list to store the samples that we generate
+    data = list()
+
+    # Condition 1
+    if rand_first_player:
+        # generate n samples
+        for _ in range(n_samples):
+            # determining player and open space count
+            player = random.choice([-1, 1])
+            # generating and storing the sample
+            match = gt.randomized_reinforcement_match(
+                first_player=player, class_type=class_type
+            )
+            data += match
+
+    # Condition 2
+    else:
+        # generating n samples
+        for _ in range(n_samples):
+            # generating and storing the sample
+            match = gt.randomized_reinforcement_match(
+                first_player=first_player, class_type=class_type
+            )
+            data += match
+
+    # will randomly order the samples before saving
+    if shuffled:
+        random.shuffle(data)
+
+    # converting the list into a DataFrame
+    df = pd.DataFrame(data)
+
+    # saves the file to specified directory
+    if save_file:
+        if directory is None:
+            raise Exception("Must provide a directory to save the sample")
+        else:
+            df.to_csv(path_or_buf=directory, index=False)
+
+    # returning the DataFrame
+    return df
