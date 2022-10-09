@@ -53,7 +53,7 @@ while not game_status[0]:
             row, column = None, None
             print("That space is taken, please select another! \n")
 
-    game_status = gt.board_status(game.board)
+    game_status = game.status()
 
 # completion and results
 if game_status[1] != None:
