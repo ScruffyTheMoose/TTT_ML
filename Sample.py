@@ -77,7 +77,6 @@ def random_samples(
 
 def reinforcement_sample(
     n_samples: int = 200,
-    rand_seed: int = 1,
     class_type: str = "XOD",
     save_file: bool = False,
     directory: str = None,
@@ -85,8 +84,6 @@ def reinforcement_sample(
     first_player: int = 1,
     shuffled: bool = True,
 ) -> pd.DataFrame:
-
-    random.seed(rand_seed)
 
     # list to store the samples that we generate
     data = list()
