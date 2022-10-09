@@ -322,7 +322,7 @@ class GameTools:
         return results
 
     @staticmethod
-    def randomized_reinforcement_match(first_player: int, class_type: str) -> dict:
+    def randomized_reinforcement_match(first_player: int, class_type: str) -> list:
         """Generates random TTT game board
 
         Args:
