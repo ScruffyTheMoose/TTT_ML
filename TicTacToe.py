@@ -1,10 +1,11 @@
+import enum
 import random
 
 
 class Board:
     def __init__(self) -> None:
         self.board = [[0, 0, 0] for _ in range(3)]
-        self.vector = [0 for x in range(9)]
+        self.vector = [0 for _ in range(9)]
         self.move_num = 0
 
     def get_board(self) -> list:
@@ -322,12 +323,13 @@ class GameTools:
         return results
 
     @staticmethod
-    def randomized_reinforcement_match(first_player: int, class_type: str) -> list:
+    def randomized_reinforcement_match(
+        first_player: int, class_type: str, track_moves: bool = False
+    ) -> list:
         """Generates random TTT game board
 
         Args:
             first_player (int): player making first move; 'X' = 1, 'O' = -1
-            open_spaces (int): number of open positions to leave on the board
             class_type (str): 'XOD' or 'position'
 
         Returns:
@@ -353,6 +355,10 @@ class GameTools:
                     s[idx + 1] = elem
                 s["label"] = (move[0] * 3) + move[1] + 1
 
+            if track_moves:
+                for idx, elem in enumerate(move_order):
+                    s[str(idx + 1) + "m"] = elem
+
             # add data to the tracked game states
             states.append(s)
 
@@ -361,6 +367,8 @@ class GameTools:
 
         # tracking all board states prior to making a move
         states = list()
+
+        move_order = [0 for _ in range(9)]
 
         # generating list of all positions on the board to randomly choose from
         # this is better than the alternative of randomly generating numbers
@@ -380,16 +388,22 @@ class GameTools:
 
             if pos % 2 != 0:
                 # tracking state
-                track()
+                if first_player == 1:
+                    track()
 
                 # making move
                 game.move(row=move[0], column=move[1], player=first_player)
             else:
                 # tracking state
-                track()
+                if first_player == -1:
+                    track()
 
                 # making move
                 game.move(row=move[0], column=move[1], player=(-1 * first_player))
+
+            # tracking move order
+            move_idx = (move[0] * 3) + move[1]
+            move_order[move_idx] = 10 - pos
 
             pos -= 1
 
@@ -406,5 +420,8 @@ class GameTools:
         if class_type == "positional":
             for s in states:
                 s["outcome"] = status[1]
+
+        for s in states:
+            s["first"] = first_player
 
         return states
