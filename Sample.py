@@ -78,6 +78,7 @@ def random_samples(
 def reinforcement_sample(
     n_samples: int = 200,
     class_type: str = "XOD",
+    tracked_moves: bool = False,
     save_file: bool = False,
     directory: str = None,
     rand_first_player: bool = True,
@@ -96,7 +97,9 @@ def reinforcement_sample(
             player = random.choice([-1, 1])
             # generating and storing the sample
             match = gt.randomized_reinforcement_match(
-                first_player=player, class_type=class_type
+                first_player=player,
+                class_type=class_type,
+                track_moves=tracked_moves,
             )
             data += match
 
@@ -106,7 +109,9 @@ def reinforcement_sample(
         for _ in range(n_samples):
             # generating and storing the sample
             match = gt.randomized_reinforcement_match(
-                first_player=first_player, class_type=class_type
+                first_player=first_player,
+                class_type=class_type,
+                track_moves=tracked_moves,
             )
             data += match
 
