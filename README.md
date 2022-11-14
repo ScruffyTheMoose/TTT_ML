@@ -17,7 +17,7 @@ Every game state seen in the environment has 9 associate labels for the 9 possib
 
 In TTT, there is a finite number of game states. There are 4520 incomplete game states. For every incomplete game state that the model sees, there are several potential moves that could be made. In order to ensure the model is exposed to as many game states and moves as possible, a randomness parameter was added. Usually set to 0.5, this means that 50% of the time a random move will be made rather than a move based on the models prediction. These random moves will update the scores in the 'state data'.
 
-![training explained](https://raw.githubusercontent.com/ScruffyTheMoose/TTT_ML/master/Training%20Explained.jpg)
+![training explained](https://raw.githubusercontent.com/ScruffyTheMoose/TTT_ML/master/Training%20Explained.png)
 
 ## Application
 1)  Instantiate a Multi-Layer Perceptron multiclassifier using the SKL library
