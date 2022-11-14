@@ -10,17 +10,16 @@
 
 The resulting models were built using a combination of incrementally training a dense neural network in a reinforcement training environment.
 
-## Training Environment
-After testing numerous possible solutions, the most success was found by tracking and scoring every game state seen in the environment in a similar manner to Q-Learning but with the caviat that we do not need to evaluate the 'quality' of a move. 
+## Training Process
+After testing numerous possible solutions, the most success was found by tracking and scoring every game state and move seen in the environment based on its historical performance.
 
 Every game state seen in the environment has 9 associate labels for the 9 possible moves that could be made. This data is stored in a hashmap (python dictionary). The game state is hashed to be used as a key, the the possible moves are stored as the associated value in an array. The dictionary is called the 'state data'.
 
 In TTT, there is a finite number of game states. There are 4520 incomplete game states. For every incomplete game state that the model sees, there are several potential moves that could be made. In order to ensure the model is exposed to as many game states and moves as possible, a randomness parameter was added. Usually set to 0.5, this means that 50% of the time a random move will be made rather than a move based on the models prediction. These random moves will update the scores in the 'state data'.
 
-At the end of each training iteration, the model and 'state data' get updated. Rather than fitting the model to labels based on its performance from a single iteration, it gets fit to labels based on the best performing move found in the 'state data'. 
-For example, when the model wins a match, all of the moves it made will be given points that are tracked in 'state data'. The model is then fit to labels that have historically shown the best performance (highest points) in 'state data'.
+![training explained](https://raw.githubusercontent.com/ScruffyTheMoose/TTT_ML/master/Training%20Explained.jpg)
 
-## Training Process
+## Application
 1)  Instantiate a Multi-Layer Perceptron multiclassifier using the SKL library
 2)  Feed the model initial information about the game - ie: show the model a game state and a label
 3)  Instantiate the training environment and give the environment a reference to the model
