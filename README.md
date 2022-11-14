@@ -2,46 +2,31 @@
 ![Jupyter Notebook](https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
 ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-%23ffffff.svg?style=for-the-badge&logo=Matplotlib&logoColor=black)
 
 
 `TTT ML` is a research repository looking at different approaches to training machine learning algorithms to play Tic-Tac-Toe (TTT).
 
-[Project Overview](https://github.com/ScruffyTheMoose/TTT_ML/blob/master/walkthrough.ipynb)
+The resulting models were built using a combination of incrementally training a dense neural network in a reinforcement training environment.
 
-## model_binaries
+## Training Process
+After testing numerous possible solutions, the most success was found by tracking and scoring every game state and move seen in the environment based on its historical performance.
+
+Every game state seen in the environment has 9 associate labels for the 9 possible moves that could be made. This data is stored in a hashmap (python dictionary). The game state is hashed to be used as a key, the the possible moves are stored as the associated value in an array. The dictionary is called the 'state data'.
+
+In TTT, there is a finite number of game states. There are 4520 incomplete game states. For every incomplete game state that the model sees, there are several potential moves that could be made. In order to ensure the model is exposed to as many game states and moves as possible, a randomness parameter was added. Usually set to 0.5, this means that 50% of the time a random move will be made rather than a move based on the models prediction. These random moves will update the scores in the 'state data'.
+
+![training explained](https://raw.githubusercontent.com/ScruffyTheMoose/TTT_ML/master/Training%20Explained.jpg)
+
+## Application
+1)  Instantiate a Multi-Layer Perceptron multiclassifier using the SKL library
+2)  Feed the model initial information about the game - ie: show the model a game state and a label
+3)  Instantiate the training environment and give the environment a reference to the model
+4)  Iteratively train the model in the environment, gradually improving its performance.
+
+### model_binaries
 Binaries of compiled models that can be loaded elsewhere.
 
-## model_builds
-Jupyter Notebooks where we are building different models.
-
-## model_evaluations
-Jupyter Notebooks comparing and evaluating the performance of different models.
-
-## data
-The sample data generator notebook is located here along with the data sets it has been used to build. These datasets are structured so that they are easy to use with Pandas.
-
-## tests
-You can ignore this. We need to test basic functions every time we change up things about the main TTT module, and we use these tests to do it quickly.
-
-## Modules
-
-### TicTacToe.py
-This python file contains two classes:
-- Board: class which contains a functioning TTT game
-- GameTools: contains the random match generator and a few other tools for working with TTT boards
-
-### Sample.py
-A module that generates samples for a training set based on a number of parameters and can save the dataset to a file.
-- n_samples: int
-- save_file: bool
-- directory: save directory
-- rand_first_player: bool
-- first_player: int, if not rand_first_player
-- open_space_range: the lower and upper bound for choosing open spaces on a board
-- shuffled: bool
-
-### play.py
-If you want to play the game against another human player through your command line, you can run this file. We aim to use this module later on so a person can play against an AI.
-
-### minimax.py
-Ignore this. It's not done and probably will be deleted since we are working on different approaches.
+### model_builds
+Jupyter Notebooks that walk through the builds for each model.
